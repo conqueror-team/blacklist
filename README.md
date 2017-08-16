@@ -15,5 +15,5 @@ npm run dev
 npm run build
 ```
 
-## ????
+## 使用技术
 > webpack vue vue-cli
