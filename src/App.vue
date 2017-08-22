@@ -1,19 +1,20 @@
 <template>
     <div id="app" class="container">
-        <page_header></page_header>
-        <page_content></page_content>
+        <page-header></page-header>
+        <page-content></page-content>
     </div>
 </template>
 
 <script>
 
-    import page_header from './components/page_header.vue';
-    import page_content from './components/page_content.vue';
+    import PageHeader from './components/PageHeader.vue';
+    import PageContent from './components/PageContent.vue';
 
     export default {
         components: {
-            page_content,
-            page_header},
+            'page-content': PageContent,
+            'page-header': PageHeader
+        },
         name: 'app',
         data() {
             return {

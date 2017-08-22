@@ -1,11 +1,12 @@
 <template>
-    <div class="bs-example">
-        <table class="table">
+    <div class="bs-example container">
+        <table class="table table-striped" style="margin-bottom: 0px">
             <thead>
             <tr>
                 <th></th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Username</th>
                 <th>Username</th>
             </tr>
             </thead>
@@ -15,30 +16,43 @@
                 <td>Mark</td>
                 <td>Otto</td>
                 <td>@mdo</td>
+                <td>@mdo</td>
             </tr>
             <tr>
                 <th>2</th>
                 <td>Jacob</td>
                 <td>Thornton</td>
                 <td>@fat</td>
+                <td>@mdo</td>
             </tr>
             <tr>
                 <th>3</th>
                 <td>Larry</td>
                 <td>the Bird</td>
                 <td>@twitter</td>
+                <td>@mdo</td>
             </tr>
             </tbody>
         </table>
+        <pagination-bar v-bind:requestPage="requestPage"></pagination-bar>
+        <input type="number" v-model="requestPage"/>
     </div>
 </template>
 
 <script>
+
+    import MemberManager from "../assets/js/MemberManager.js";
+    import PaginationBar from "./PaginationBar.vue";
+
+    let a = new MemberManager();
+
     export default {
-        name: 'page_content',
+        components: {
+            'pagination-bar': PaginationBar},
+        name: 'page-content',
         data() {
             return {
-
+                requestPage:0
             }
         }
     }
@@ -53,8 +67,7 @@
         -webkit-box-shadow: none;
         box-shadow: none;
         position: relative;
-        padding: 15px 15px 15px;
-        margin: 0 -15px 15px;
+        padding: 15px 15px 15px 15px;
         border-style: solid;
     }
 </style>
