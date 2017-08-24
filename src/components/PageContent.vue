@@ -34,8 +34,10 @@
             </tr>
             </tbody>
         </table>
-        <pagination-bar v-bind:requestPage="requestPage"></pagination-bar>
+        <pagination-bar :requestPage="requestPage" :pageSize="pageSize" :totalCount="totalCount"></pagination-bar>
         <input type="number" v-model="requestPage"/>
+        <input type="number" v-model="pageSize"/>
+        <input type="number" v-model="totalCount"/>
     </div>
 </template>
 
@@ -52,7 +54,9 @@
         name: 'page-content',
         data() {
             return {
-                requestPage:0
+                requestPage:0,
+                pageSize:10,
+                totalCount:105
             }
         }
     }
