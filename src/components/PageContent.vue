@@ -34,7 +34,12 @@
             </tr>
             </tbody>
         </table>
-        <pagination-bar :requestPage="requestPage" :pageSize="pageSize" :totalCount="totalCount"></pagination-bar>
+        <pagination-bar :request-page="requestPage" :page-size="pageSize" :total-count="totalCount"
+                        @on-previous-click="onPreviousClick"
+                        @on-next-click="onNextClick"
+                        @on-previous-jump-click="onPreviousJumpClick"
+                        @on-next-jump-click="onNextJumpClick"
+                        @on-page-item-click="onPageItemClick"></pagination-bar>
         <input type="number" v-model="requestPage"/>
         <input type="number" v-model="pageSize"/>
         <input type="number" v-model="totalCount"/>
@@ -50,13 +55,31 @@
 
     export default {
         components: {
-            'pagination-bar': PaginationBar},
+            'pagination-bar': PaginationBar
+        },
         name: 'page-content',
         data() {
             return {
-                requestPage:0,
-                pageSize:10,
-                totalCount:105
+                requestPage: 1,
+                pageSize: 10,
+                totalCount: 105
+            }
+        },
+        methods: {
+            onPreviousClick: function () {
+                this.requestPage--;
+            },
+            onNextClick: function () {
+                this.requestPage++;
+            },
+            onPreviousJumpClick: function () {
+                this.requestPage -= 2;
+            },
+            onNextJumpClick: function () {
+                this.requestPage += 2;
+            },
+            onPageItemClick:function (page) {
+                this.requestPage = page;
             }
         }
     }

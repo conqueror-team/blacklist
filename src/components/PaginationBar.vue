@@ -2,17 +2,14 @@
     <div>
         <ul class="pagination" style="">
             <li :class="{disabled:!isPrevious}">
-                <a href="#" aria-label="Previous">
-                    <span>&laquo;</span>
-                </a>
+                <span @click="onPreviousClick()">&laquo;</span>
             </li>
-            <template v-for="item in pageList">
-                <li :class="{active:item.isActive}"><a href="#" v-text="item.pageText"></a></li>
+            <template v-for="(item,index) in pageList">
+                <li :class="{active:item.isActive}">
+                    <span v-text="item.pageText" @click="onPageItemClick(index)"></span></li>
             </template>
             <li :class="{disabled:!isNext}">
-                <a href="#" aria-label="Next">
-                    <span>&raquo;</span>
-                </a>
+                <span @click="onNextClick()">&raquo;</span>
             </li>
         </ul>
     </div>
@@ -26,7 +23,30 @@
         data() {
             return {}
         },
-        methods: {},
+        methods: {
+            onPageItemClick: function (cIndex) {
+                let list = this.pageList;
+                let index = parseInt(cIndex);
+                if (index == 1 && list[index].pageText == "...") {
+                    this.$emit("on-previous-jump-click");
+                } else if (index == 5 && list[index].pageText == "...") {
+                    this.$emit("on-next-jump-click");
+                } else {
+                    this.$emit("on-page-item-click", list[index].pageText);
+                }
+
+            },
+            onPreviousClick: function () {
+                if (this.isPrevious) {
+                    this.$emit("on-previous-click");
+                }
+            },
+            onNextClick: function () {
+                if (this.isNext) {
+                    this.$emit("on-next-click");
+                }
+            }
+        },
         mounted: function () {
 
         },
@@ -70,7 +90,7 @@
                 list.push(buildPage("..."));
                 if (totalPage - requestPage >= 4) {
                     list.push(buildPage(requestPage - 1));
-                    list.push(buildPage(requestPage,true));
+                    list.push(buildPage(requestPage, true));
                     list.push(buildPage(requestPage + 1));
                     list.push(buildPage("..."));
                     list.push(buildPage(totalPage));
