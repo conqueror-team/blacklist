@@ -3,42 +3,33 @@
         <table class="table table-striped" style="margin-bottom: 0px">
             <thead>
             <tr>
-                <th></th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-                <th>Username</th>
+                <th>#</th>
+                <th>name</th>
+                <th>area</th>
+                <th>picture</th>
+                <th>comment</th>
+                <th>create_time</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th>1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th>2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th>3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td>@mdo</td>
-            </tr>
+            <template v-for="item in memberList">
+                <tr>
+                    <th v-text="item.id"></th>
+                    <td v-text="item.name"></td>
+                    <td v-text="item.area"></td>
+                    <td>
+                        <a :href="item.picture" v-show="isShowPicture(item)" target="_blank">
+                            <img :src="item.picture" width="50px" height="50px"/>
+                        </a>
+                    </td>
+                    <td v-text="item.comment"></td>
+                    <td v-text="item.create_time"></td>
+                </tr>
+            </template>
             </tbody>
         </table>
         <pagination-bar :request-page="requestPage" :page-size="pageSize" :total-count="totalCount"
                         @on-page-item-change="onPageItemChange"></pagination-bar>
-        <input type="number" v-model="requestPage"/>
-        <input type="number" v-model="pageSize"/>
-        <input type="number" v-model="totalCount"/>
     </div>
 </template>
 
@@ -47,7 +38,8 @@
     import MemberManager from "../assets/js/MemberManager.js";
     import PaginationBar from "./PaginationBar.vue";
 
-    let a = new MemberManager();
+    let memberManager = new MemberManager();
+    let defaultPageSize = 10;
 
     export default {
         components: {
@@ -57,14 +49,42 @@
         data() {
             return {
                 requestPage: 1,
-                pageSize: 10,
-                totalCount: 105
+                pageSize: defaultPageSize,
+                totalCount: 0,
+                memberList: []
             }
         },
         methods: {
-            onPageItemChange:function (page) {
+            onPageItemChange: function (page) {
                 this.requestPage = page;
+                this.loadMemberList(page, defaultPageSize);
+            },
+            loadMemberList: function (requestPage, pageSize) {
+                let self = this;
+                memberManager.getMemberList(requestPage, pageSize, function (ret, isSuccess) {
+                    if (isSuccess) {
+                        self.requestPage = requestPage;
+                        self.pageSize = pageSize;
+                        self.totalCount = ret.result.totalCount;
+                        self.memberList = ret.result.data;
+                    } else {
+                        self.requestPage = 1;
+                        self.pageSize = pageSize;
+                        self.totalCount = 0;
+                        self.memberList = [];
+                    }
+                })
+            },
+            isShowPicture: function (item) {
+                if (item.picture == "") {
+                    return false;
+                } else {
+                    return true;
+                }
             }
+        },
+        mounted: function () {
+            this.loadMemberList(1, defaultPageSize);
         }
     }
 </script>

@@ -3,18 +3,18 @@ class MemberManager {
     getMemberList(requestPage, pageSize, callback) {
         let data = {requestPage: requestPage, pageSize: pageSize};
         $.ajax({
-            url:'',
-            async: true,
+            url:'/app/member/getAll',
+            async: false,
             cache: false,
             type:"POST",
             contentType: "application/x-www-form-urlencoded",
             data: data,
             dataType: "json",
             error:function (xhr, msg, e) {
-
+                callback(null,false);
             },
             success:function (result) {
-
+                callback(result,true);
             }
         });
     }
