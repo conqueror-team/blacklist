@@ -28,22 +28,21 @@
                 let list = this.pageList;
                 let index = parseInt(cIndex);
                 if (index == 1 && list[index].pageText == "...") {
-                    this.$emit("on-previous-jump-click");
+                    this.$emit("on-page-item-change", this.requestPage - 2);
                 } else if (index == 5 && list[index].pageText == "...") {
-                    this.$emit("on-next-jump-click");
+                    this.$emit("on-page-item-change", this.requestPage + 2);
                 } else {
-                    this.$emit("on-page-item-click", list[index].pageText);
+                    this.$emit("on-page-item-change", list[index].pageText);
                 }
-
             },
             onPreviousClick: function () {
                 if (this.isPrevious) {
-                    this.$emit("on-previous-click");
+                    this.$emit("on-page-item-change", this.requestPage - 1);
                 }
             },
             onNextClick: function () {
                 if (this.isNext) {
-                    this.$emit("on-next-click");
+                    this.$emit("on-page-item-change", this.requestPage + 1);
                 }
             }
         },
@@ -119,5 +118,7 @@
 </script>
 
 <style>
-
+    span:hover{
+        cursor:pointer
+    }
 </style>

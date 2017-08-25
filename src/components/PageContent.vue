@@ -35,11 +35,7 @@
             </tbody>
         </table>
         <pagination-bar :request-page="requestPage" :page-size="pageSize" :total-count="totalCount"
-                        @on-previous-click="onPreviousClick"
-                        @on-next-click="onNextClick"
-                        @on-previous-jump-click="onPreviousJumpClick"
-                        @on-next-jump-click="onNextJumpClick"
-                        @on-page-item-click="onPageItemClick"></pagination-bar>
+                        @on-page-item-change="onPageItemChange"></pagination-bar>
         <input type="number" v-model="requestPage"/>
         <input type="number" v-model="pageSize"/>
         <input type="number" v-model="totalCount"/>
@@ -66,19 +62,7 @@
             }
         },
         methods: {
-            onPreviousClick: function () {
-                this.requestPage--;
-            },
-            onNextClick: function () {
-                this.requestPage++;
-            },
-            onPreviousJumpClick: function () {
-                this.requestPage -= 2;
-            },
-            onNextJumpClick: function () {
-                this.requestPage += 2;
-            },
-            onPageItemClick:function (page) {
+            onPageItemChange:function (page) {
                 this.requestPage = page;
             }
         }
