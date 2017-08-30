@@ -1,6 +1,5 @@
 var path = require('path')
 var webpack = require('webpack')
-
 module.exports = {
     entry: './src/main.js',
     output: {
@@ -45,7 +44,14 @@ module.exports = {
     performance: {
         hints: false
     },
-    devtool: '#eval-source-map'
+    devtool: '#eval-source-map',
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        })
+    ]
 }
 
 if (process.env.NODE_ENV === 'production') {

@@ -31,6 +31,8 @@
                     this.$emit("on-page-item-change", this.requestPage - 2);
                 } else if (index == 5 && list[index].pageText == "...") {
                     this.$emit("on-page-item-change", this.requestPage + 2);
+                } else if (list[index].pageText == this.requestPage) {
+                    return;
                 } else {
                     this.$emit("on-page-item-change", list[index].pageText);
                 }
@@ -118,7 +120,7 @@
 </script>
 
 <style>
-    span:hover{
-        cursor:pointer
+    span:hover {
+        cursor: pointer
     }
 </style>

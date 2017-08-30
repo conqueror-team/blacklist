@@ -18,6 +18,25 @@ class MemberManager {
             }
         });
     }
+
+    searchMember(keyword,callback){
+        let data = {keyword:keyword};
+        $.ajax({
+            url:'/app/member/search',
+            async: false,
+            cache: false,
+            type:"POST",
+            contentType: "application/x-www-form-urlencoded",
+            data: data,
+            dataType: "json",
+            error:function (xhr, msg, e) {
+                callback(null,false);
+            },
+            success:function (result) {
+                callback(result,true);
+            }
+        });
+    }
 }
 
 export default MemberManager

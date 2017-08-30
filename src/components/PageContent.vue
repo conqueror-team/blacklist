@@ -37,9 +37,35 @@
 
     import MemberManager from "../assets/js/MemberManager.js";
     import PaginationBar from "./PaginationBar.vue";
+    import EventBus from "../assets/js/EventBus.js";
+    import BootboxManager from "../assets/js/BootboxManager.js";
 
     let memberManager = new MemberManager();
+    let bootbox = new BootboxManager();
     let defaultPageSize = 10;
+    let bus = EventBus.getBus();
+    let self = this;
+
+    function registerEvent(self) {
+        bus.$on("onSearchClick", function (searchKeyword) {
+            if (searchKeyword == '') {
+                self.loadMemberList(1, defaultPageSize);
+                return;
+            }
+            memberManager.searchMember(searchKeyword, function (ret, isSuccess) {
+                if (isSuccess && ret.code == 0 && ret.result.totalCount > 0) {
+                    self.requestPage = 1;
+                    self.pageSize = defaultPageSize;
+                    self.totalCount = ret.result.totalCount;
+                    self.memberList = ret.result.data;
+                } else {
+                    bootbox.showErrorMessage('无搜索结果');
+                    self.loadMemberList(1, defaultPageSize);
+                }
+            })
+        });
+    }
+
 
     export default {
         components: {
@@ -62,7 +88,7 @@
             loadMemberList: function (requestPage, pageSize) {
                 let self = this;
                 memberManager.getMemberList(requestPage, pageSize, function (ret, isSuccess) {
-                    if (isSuccess) {
+                    if (isSuccess && ret.code == 0) {
                         self.requestPage = requestPage;
                         self.pageSize = pageSize;
                         self.totalCount = ret.result.totalCount;
@@ -85,6 +111,7 @@
         },
         mounted: function () {
             this.loadMemberList(1, defaultPageSize);
+            registerEvent(this);
         }
     }
 </script>
