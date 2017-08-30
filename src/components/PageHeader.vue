@@ -18,7 +18,7 @@
                 </div>
                 <button type="button" class="btn btn-primary" @click="search()">搜索</button>
             </li>
-            <li role="presentation" style="float:right;"><a href="#" style="color:red">管理黑名单</a></li>
+            <li role="presentation" style="float:right;"><a href="admin" style="color:red">录入黑名单</a></li>
         </ul>
     </div>
 </template>
