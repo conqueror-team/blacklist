@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <h1 style="text-align: center">黑名单系统</h1>
+        <h1 style="text-align: center">黑名单公示</h1>
 
         <ul class="nav nav-pills navbar-form" style="margin-bottom: 10px;">
             <li role="presentation" class="active"><a href="#">黑名单</a></li>
@@ -9,7 +9,7 @@
                     href="http://luke.dnfzhengfuzhe.com/" target="_blank">塔罗牌小工具</a>
             </li>
             <li role="presentation"><a
-                    href="http://bbs.dnfzhengfuzhe.com/forum.php?mod=viewthread&amp;tid=59&amp;extra=" target="_blank">加入我们</a>
+                    href="http://bbs.dnfzhengfuzhe.com/forum.php?mod=viewthread&tid=6&extra=&page=1" target="_blank">加入我们</a>
             </li>
             <li role="presentation"><a href="#">Create By Jcr</a></li>
             <li role="presentation" style="margin-top: 5px;float:right;margin-right: -40px">
@@ -18,7 +18,7 @@
                 </div>
                 <button type="button" class="btn btn-primary" @click="search()">搜索</button>
             </li>
-            <li role="presentation" style="float:right;"><a href="admin" style="color:red">录入黑名单</a></li>
+            <li role="presentation" style="float:right;"><a href="admin" target="_blank" style="color:red">录入黑名单</a></li>
         </ul>
     </div>
 </template>

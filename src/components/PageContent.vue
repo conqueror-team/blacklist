@@ -3,27 +3,27 @@
         <table class="table table-striped" style="margin-bottom: 0px">
             <thead>
             <tr>
-                <th>#</th>
-                <th>name</th>
-                <th>area</th>
-                <th>picture</th>
-                <th>comment</th>
-                <th>create_time</th>
+                <!--<th>#</th>-->
+                <th>ID/名称</th>
+                <th>跨区</th>
+                <th>相关截图</th>
+                <th>备注</th>
+                <th>创建时间</th>
             </tr>
             </thead>
             <tbody>
             <template v-for="item in memberList">
                 <tr>
-                    <th v-text="item.id"></th>
+                    <!--<th v-text="item.id"></th>-->
                     <td v-text="item.name"></td>
                     <td v-text="item.area"></td>
                     <td>
-                        <a :href="item.picture" v-show="isShowPicture(item)" target="_blank">
-                            <img :src="item.picture" width="50px" height="50px"/>
+                        <a :href="'showImage?href='+item.picture" v-show="isShowPicture(item)" target="_blank">
+                            <img :src="item.picture" width="80px" height="80px"/>
                         </a>
                     </td>
                     <td v-text="item.comment"></td>
-                    <td v-text="item.create_time"></td>
+                    <td v-text="convertTime(item.create_time)"></td>
                 </tr>
             </template>
             </tbody>
@@ -107,6 +107,11 @@
                 } else {
                     return true;
                 }
+            },
+            convertTime:function (timestamp) {
+                let date = new Date();
+                date.setTime(timestamp * 1000);
+                return date.toLocaleString();
             }
         },
         mounted: function () {
